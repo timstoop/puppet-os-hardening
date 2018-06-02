@@ -32,7 +32,9 @@ class os_hardening::minimize_access (
   }
   # from which folders to remove public access
   $folders = [
+    '/usr/local/games',
     '/usr/local/sbin',
+    '/usr/local/bin',
     '/usr/sbin',
     '/usr/bin',
     '/sbin',
