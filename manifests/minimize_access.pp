@@ -52,7 +52,7 @@ class os_hardening::minimize_access (
   }
 
   # shadow must only be accessible to user root
-  file { '/etc/shadow':
+  file { ['/etc/shadow', '/etc/gshadow']:
     ensure => file,
     owner  => 'root',
     group  => $shadowgroup,
