@@ -37,6 +37,7 @@ class os_hardening (
   Boolean           $manage_pam_unix          = false,
   Boolean           $enable_pw_history        = true,
   Integer           $pw_remember_last         = 5,
+  Boolean           $only_root_may_su         = true,
 
   Array             $root_ttys                =
     ['console','tty1','tty2','tty3','tty4','tty5','tty6'],

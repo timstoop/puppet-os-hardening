@@ -17,6 +17,7 @@ class os_hardening::pam (
   Boolean $manage_pam_unix   = false,
   Boolean $enable_pw_history = false,
   Integer $pw_remember_last  = 5,
+  Boolean $only_root_may_su  = true,
 ) {
 
   # prepare package names
@@ -50,6 +51,7 @@ class os_hardening::pam (
       $passwdqc_path = '/usr/share/pam-configs/passwdqc'
       $tally2_path   = '/usr/share/pam-configs/tally2'
       $unix_path     = '/usr/share/pam-configs/unix'
+      $su_path       = '/etc/pam.d/su'
 
       # if passwdqc is enabled
       if $passwdqc_enabled == true {
@@ -128,6 +130,17 @@ class os_hardening::pam (
           group   => 'root',
           mode    => '0640',
           notify  => Exec['update-pam'],
+        }
+      }
+
+      #only allow root and members of the group wheel to su
+      if $only_root_may_su {
+        file { $su_path:
+          ensure  => file,
+          content => template('os_hardening/pam_su.erb'),
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0640',
         }
       }
 
