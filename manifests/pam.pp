@@ -17,7 +17,7 @@ class os_hardening::pam (
   Boolean $manage_pam_unix   = false,
   Boolean $enable_pw_history = false,
   Integer $pw_remember_last  = 5,
-  Boolean $only_root_can_su  = true,
+  Boolean $only_root_may_su  = true,
 ) {
 
   # prepare package names
