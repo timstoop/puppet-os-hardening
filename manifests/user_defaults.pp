@@ -10,34 +10,29 @@
 # Configures user defaults for shells
 #
 class os_hardening::user_defaults (
-  Array   $extra_user_paths         = [],
-  String  $umask                    = '027',
-  String  $maildir                  = '/var/mail',
-  Boolean $usergroups               = true,
-  Integer $sys_uid_min              = 100,
-  Integer $sys_gid_min              = 100,
-  Integer $password_max_age         = 60,
-  Integer $password_min_age         = 7,
-  Integer $password_warn_age        = 7,
-  Integer $login_retries            = 5,
-  Integer $login_timeout            = 60,
-  String  $chfn_restrict            = '',
-  Boolean $allow_login_without_home = false,
+  Boolean $manage_global_bashrc = false,
+  String  $default_umask        = '027',
 ) {
 
-  # prepare all variables
-  $additional_user_paths = join($extra_user_paths, ':')
+  if $manage_global_bashrc {
+    case $::operatingsystem {
+      debian, ubuntu: {
+        $global_bashrc = '/etc/bash.bashrc'
+        $bashrc_template = 'os_hardening/bash.bashrc.debian.erb'
+      }
+      default: {
+        fail("Sorry! This is not implemented for platform $::operatingsystem.")
+      }
+    }
 
-  # convert bool to yes/no
-  $usergroups_yn = bool2str($usergroups, 'yes', 'no')
-
-  # set the file
-  file { '/etc/login.defs':
-      ensure  => file,
-      content => template('os_hardening/login.defs.erb'),
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0444',
+    # set the file
+    file { $global_bashrc:
+        ensure  => file,
+        content => template($bashrc_template),
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+    }
   }
 
 }

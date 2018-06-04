@@ -98,6 +98,10 @@ This Puppet module provides secure configuration of your base OS with hardening.
   `true` if you want to remove SUID/SGID bits from any file, that is not explicitly configured in a `blacklist`. This will make every Puppet run search through the mounted filesystems looking for SUID/SGID bits that are not configured in the default and user blacklist. If it finds an SUID/SGID bit, it will be removed, unless this file is in your `whitelist`.
 * `dry_run_on_unknown = false`
   like `remove_from_unknown` above, only that SUID/SGID bits aren't removed. It will still search the filesystems to look for SUID/SGID bits but it will only print them in your log. This option is only ever recommended, when you first configure `remove_from_unknown` for SUID/SGID bits, so that you can see the files that are being changed and make adjustments to your `whitelist` and `blacklist`.
+* `manage_global_bashrc = false`
+  when set to true, this will override the default bashrc to tighten security based on the CIS Benchmark recommendations
+* `default_umask = '027'`
+  sets the default umask in the global bashrc, if `manage_global_bashrc` is enabled, should be `027` or less according to CIS Benchmark 5.4.4
 
 ## Usage
 
