@@ -23,6 +23,7 @@ class os_hardening::login_defs (
   Integer $login_timeout            = 60,
   String  $chfn_restrict            = '',
   Boolean $allow_login_without_home = false,
+  Integer $inactivity_expire        = 30,
 ) {
 
   # prepare all variables
@@ -38,6 +39,12 @@ class os_hardening::login_defs (
       owner   => 'root',
       group   => 'root',
       mode    => '0444',
+  }
+
+  file_line { 'inactive account lock timeout':
+    line  => "INACTIVE=${inactivity_expire}",
+    match => '#?\s*INACTIVE=.*',
+    path  => '/etc/default/useradd',
   }
 
 }

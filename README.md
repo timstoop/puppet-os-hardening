@@ -56,6 +56,8 @@ This Puppet module provides secure configuration of your base OS with hardening.
   authentication timeout in seconds, so login will exit if this time passes
 * `allow_login_without_home = false`
   true if to allow users without home to login
+* `inactivity_expire = 30`
+  will lock accounts after this amount of days of inactivity
 * `passwdqc_enabled = true`
   true if you want to use strong password checking in PAM using passwdqc
 * `passwdqc_options = "min=disabled,disabled,16,12,8"`
