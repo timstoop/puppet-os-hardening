@@ -25,6 +25,7 @@ class os_hardening (
   Integer           $login_timeout            = 60,
   String            $chfn_restrict            = '',
   Boolean           $allow_login_without_home = false,
+  Integer           $inactivity_expire        = 30,
 
   Boolean           $allow_change_user        = false,
   Array             $ignore_users             = [],
@@ -130,6 +131,7 @@ class os_hardening (
     login_timeout            => $login_timeout,
     chfn_restrict            => $chfn_restrict,
     allow_login_without_home => $allow_login_without_home,
+    inactivity_expire        => $inactivity_expire,
   }
   class { 'os_hardening::minimize_access':
     allow_change_user => $allow_change_user,
