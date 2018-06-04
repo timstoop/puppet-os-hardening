@@ -182,4 +182,8 @@ class os_hardening (
     }
   }
 
+  class { 'os_hardening::user_defaults':
+    manage_global_bashrc => $manage_global_bashrc,
+    default_umask        => $default_umask,
+  }
 }
