@@ -46,13 +46,14 @@ class os_hardening::minimize_access (
 
   # remove write permissions from path folders ($PATH) for all regular users
   # this prevents changing any system-wide command from normal users
-  file { $folders:
+  ensure_resources ('file',
+  { $folders => {
     ensure       => directory,
     links        => follow,
     mode         => 'go-w',
     recurse      => true,
     recurselimit => $recurselimit,
-  }
+  }})
 
   # shadow must only be accessible to user root
   file { $shadow_path:
