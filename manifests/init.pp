@@ -64,6 +64,9 @@ class os_hardening (
   Boolean           $enable_stack_protection  = true,
   Boolean           $enable_rpfilter          = true,
   Boolean           $enable_log_martians      = true,
+
+  Boolean           $manage_global_bashrc     = false,
+  String            $default_umask            = '027',
 ) {
 
   # Prepare
