@@ -112,7 +112,6 @@ class os_hardening::minimize_access (
   file { $logfiles_with_default_incorrect_permissions:
     mode => 'g-w,o-rwx',
   }
-  ]
 
 }
 
