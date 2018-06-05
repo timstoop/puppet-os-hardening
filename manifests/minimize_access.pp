@@ -95,5 +95,21 @@ class os_hardening::minimize_access (
     password => '*',
   }
 
+  $cron_directories = [
+    '/etc/cron.d',
+    '/etc/cron.monthly',
+    '/etc/cron.weekly',
+    '/etc/cron.daily',
+    '/etc/cron.hourly',
+  ]
+
+  # tighten restrictions on cron directory for CIS DIL Benchmark 5.1.3-7
+  file { $cron_directories:
+    ensure => directory,
+    mode   => 0700,
+    owner  => 'root',
+    group  => 'root',
+  }
+
 }
 
