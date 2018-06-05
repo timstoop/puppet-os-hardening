@@ -22,7 +22,7 @@ class os_hardening::minimize_access (
   case $::operatingsystem {
     redhat, fedora: {
       $nologin_path = '/sbin/nologin'
-      $shadow_path = '/etc/shadow'
+      $shadow_path = ['/etc/shadow', '/etc/gshadow']
     }
     debian, ubuntu: {
       $nologin_path = '/usr/sbin/nologin'
