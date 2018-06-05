@@ -95,6 +95,14 @@ class os_hardening::minimize_access (
     password => '*',
   }
 
+  # tighten restrictions on crontab for CIS DIL Benchmark 5.1.2
+  file { '/etc/crontab':
+    ensure => file,
+    mode   => '0600',
+    owner  => 'root',
+    group  => 'root',
+  }
+
   $cron_directories = [
     '/etc/cron.d',
     '/etc/cron.monthly',
