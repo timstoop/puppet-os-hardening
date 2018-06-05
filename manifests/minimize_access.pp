@@ -95,7 +95,7 @@ class os_hardening::minimize_access (
     password => '*',
   }
 
-  $logfile_with_default_incorrect_permissions = [
+  $logfiles_with_default_incorrect_permissions = [
     '/var/log/faillog',
     '/var/log/dpkg.log',
     '/var/log/alternatives.log',
