@@ -130,5 +130,23 @@ class os_hardening::minimize_access (
     group  => 'root',
   }
 
+  $logfile_with_default_incorrect_permissions = [
+    '/var/log/faillog',
+    '/var/log/dpkg.log',
+    '/var/log/alternatives.log',
+    '/var/log/wtmp',
+    '/var/log/installer/hardware-summary',
+    '/var/log/installer/lsb-release',
+    '/var/log/installer/status',
+    '/var/log/lastlog',
+    '/var/log/apt/history.log',
+    '/var/log/',
+  ]
+
+  # these log files are deployed by the installer with incorrect permissions, fix needed for CIS DIL Benchmark 4.2.4
+  file { $logfiles_with_default_incorrect_permissions:
+    mode => 'g-w,o-rwx',
+  }
+
 }
 
