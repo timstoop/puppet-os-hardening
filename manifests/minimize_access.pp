@@ -130,7 +130,7 @@ class os_hardening::minimize_access (
     group  => 'root',
   }
 
-  $logfile_with_default_incorrect_permissions = [
+  $logfiles_with_default_incorrect_permissions = [
     '/var/log/faillog',
     '/var/log/dpkg.log',
     '/var/log/alternatives.log',
