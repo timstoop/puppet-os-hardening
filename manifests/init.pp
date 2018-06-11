@@ -68,6 +68,11 @@ class os_hardening (
 
   Boolean           $manage_global_bashrc     = false,
   String            $default_umask            = '027',
+
+  Integer           $auditd_max_log_file      = 8,
+  Enum['rotate', 'ignore', 'syslog', 'suspend', 'keep_logs']
+                    $auditd_max_log_file_action = 'rotate',
+  Integer           $auditd_num_logs          = 5,
 ) {
 
   # Prepare
@@ -188,4 +193,11 @@ class os_hardening (
     manage_global_bashrc => $manage_global_bashrc,
     default_umask        => $default_umask,
   }
+
+  class { 'os_hardening::auditd':
+    max_log_file        => $auditd_max_log_file,
+    max_log_file_action => $auditd_max_log_file_action,
+    num_logs            => $auditd_num_logs,
+  }
+
 }
