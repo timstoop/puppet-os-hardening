@@ -80,6 +80,8 @@ This Puppet module provides secure configuration of your base OS with hardening.
   load this modules via initramfs if enable_module_loading is false
 * `disable_filesystems = ['cramfs','freevxfs','jffs2','hfs','hfsplus','squashfs','udf','vfat']`
   array of filesystems (kernel modules) that should be disabled
+* `disable_network_protos = ['dccp','sctp','rds','tipc']`
+  array of network protocols (kernel modules) that should be disabled
 * `enable_sysrq = false`
   true to enable the magic sysrq key, false otherwise
 * `enable_core_dump = false`

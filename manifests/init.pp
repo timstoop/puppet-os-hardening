@@ -50,6 +50,7 @@ class os_hardening (
   Array             $load_modules             = [],
   Array             $disable_filesystems      =
     ['cramfs','freevxfs','jffs2','hfs','hfsplus','squashfs','udf','vfat'],
+  Array             $disable_network_protos   = ['dccp','sctp','rds','tipc'],
 
   String            $cpu_vendor               = 'intel',
   Boolean           $desktop_enabled          = false,

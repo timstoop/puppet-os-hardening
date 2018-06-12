@@ -11,7 +11,7 @@
 class os_hardening::modules (
   Array $disable_filesystems =
     ['cramfs','freevxfs','jffs2','hfs','hfsplus','squashfs','udf','vfat'],
-  Array $disable_network_protocols = ['dccp','sctp','rds','tipc'],
+  Array $disable_network_protos = ['dccp','sctp','rds','tipc'],
 ) {
 
   # Disable unused filesystems (os-10)
