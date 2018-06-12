@@ -149,5 +149,13 @@ class os_hardening::minimize_access (
     mode => 'g-w,o-rwx',
   }
 
+  # CIS DIL Benchmark 3.4.2 - 3.4.5
+  file { '/etc/hosts.deny':
+    content => 'ALL: ALL',
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root';
+  }
+
 }
 
