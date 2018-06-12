@@ -198,12 +198,6 @@ class os_hardening (
     default_umask        => $default_umask,
   }
 
-  class { 'os_hardening::auditd':
-    max_log_file        => $auditd_max_log_file,
-    max_log_file_action => $auditd_max_log_file_action,
-    num_logs            => $auditd_num_logs,
-  }
-
   if $enable_auditd {
     class { 'os_hardening::auditd':
       max_log_file        => $auditd_max_log_file,
