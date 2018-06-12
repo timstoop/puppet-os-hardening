@@ -140,6 +140,7 @@ class os_hardening::minimize_access (
     '/var/log/installer/status',
     '/var/log/lastlog',
     '/var/log/apt/history.log',
+    '/var/log/apt/eipp.log.xz',
     '/var/log/',
   ]
 
