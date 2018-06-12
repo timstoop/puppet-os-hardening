@@ -57,6 +57,18 @@ class os_hardening::sysctl (
       sysctl { 'net.ipv6.conf.default.autoconf': value => '0' }
       sysctl { 'net.ipv6.conf.default.dad_transmits': value => '0' }
       sysctl { 'net.ipv6.conf.default.max_addresses': value => '1' }
+
+      # Disable it in the kernel as well
+			exec { 'CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled':
+				command => "/bin/sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=\"\\(.*\\)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\\1 ipv6.disable=1\"/g' /etc/default/grub;",
+				unless  => "/bin/grep GRUB_CMDLINE_LINUX /etc/default/grub | /bin/grep -q 'ipv6.disable=1'",
+				notify  => Exec['CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled - update grub'],
+			}
+
+      exec { 'CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled - update grub':
+        command     => '/usr/sbin/update-grub',
+        refreshonly => true,
+      }
     }
     #ignore RAs on Ipv6
     sysctl { 'net.ipv6.conf.all.accept_ra': value => '0' }
