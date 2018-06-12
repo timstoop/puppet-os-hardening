@@ -69,10 +69,14 @@ class os_hardening (
   Boolean           $manage_global_bashrc     = false,
   String            $default_umask            = '027',
 
+  Boolean           $enable_auditd            = false,
   Integer           $auditd_max_log_file      = 8,
   Enum['rotate', 'ignore', 'syslog', 'suspend', 'keep_logs']
                     $auditd_max_log_file_action = 'rotate',
   Integer           $auditd_num_logs          = 5,
+  Boolean           $apparmor_in_use          = false,
+  Boolean           $selinux_in_use           = false,
+  Array             $privileged_binaries      = [],
 ) {
 
   # Prepare
@@ -198,6 +202,17 @@ class os_hardening (
     max_log_file        => $auditd_max_log_file,
     max_log_file_action => $auditd_max_log_file_action,
     num_logs            => $auditd_num_logs,
+  }
+
+  if $enable_auditd {
+    class { 'os_hardening::auditd':
+      max_log_file        => $auditd_max_log_file,
+      max_log_file_action => $auditd_max_log_file_action,
+      num_logs            => $auditd_num_logs,
+      selinux_in_use      => $selinux_in_use,
+      apparmor_in_use     => $apparmor_in_use,
+      privileged_binaries => $privileged_binaries,
+    }
   }
 
 }
