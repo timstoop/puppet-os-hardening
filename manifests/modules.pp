@@ -11,6 +11,7 @@
 class os_hardening::modules (
   Array $disable_filesystems =
     ['cramfs','freevxfs','jffs2','hfs','hfsplus','squashfs','udf','vfat'],
+  Array $disable_network_protocols = ['dccp','sctp','rds','tipc'],
 ) {
 
   # Disable unused filesystems (os-10)
@@ -20,6 +21,15 @@ class os_hardening::modules (
     group   => 'root',
     mode    => '0440',
     content => template('os_hardening/disable_fs.erb'),
+  }
+
+  # Disable unused network protocols (CIS DIL Benchmark 3.5)
+  file { '/etc/modprobe.d/dev-sec-net-protos.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0440',
+    content => template('os_hardening/disable_net_protos.erb'),
   }
 
 }

@@ -1,0 +1,6 @@
+# Puppet os_hardening: Disable unused network protocols (CIS DIL Benchmark 3.5)
+
+<% @disable_network_protocols.each do |np| -%>
+install <%= np %> /bin/true
+<% end -%>
+
