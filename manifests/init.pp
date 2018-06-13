@@ -59,7 +59,7 @@ class os_hardening (
   Boolean           $enable_ipv4_forwarding   = false,
   Boolean           $manage_ipv6              = true,
   Boolean           $enable_ipv6              = false,
-  Boolean           fully_disable_ipv6        = false,
+  Boolean           $fully_disable_ipv6       = false,
   Boolean           $enable_ipv6_forwarding   = false,
   Boolean           $arp_restricted           = true,
   Boolean           $enable_sysrq             = false,
