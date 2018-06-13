@@ -24,6 +24,8 @@ This Puppet module provides secure configuration of your base OS with hardening.
   true if this system requires packet forwarding in IPv6 (eg Router), false otherwise
 * `enable_ipv6 = false`
   false to disable ipv6 on this system, true to enable
+* `fully_disable_ipv6 = false`
+  when set to true, change boot options to completely disable IPv6 in the kernel, requires reboot to take effect
 * `manage_ipv6 = true`
   true to harden ipv6 setup, false to ignore ipv6 completely
 * `enable_log_martians = true`
