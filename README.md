@@ -110,6 +110,12 @@ This Puppet module provides secure configuration of your base OS with hardening.
   when set to true, this will override the default bashrc to tighten security based on the CIS Benchmark recommendations
 * `default_umask = '027'`
   sets the default umask in the global bashrc, if `manage_global_bashrc` is enabled, should be `027` or less according to CIS Benchmark 5.4.4
+* `unwanted_packages = ['telnet']`
+  packages that should be removed from the system
+* `wanted_packages = ['ntp']`
+  packages that should be added to the system
+* `disabled_services = ['rsync']`
+  services that should not be enabled
 
 ## Usage
 

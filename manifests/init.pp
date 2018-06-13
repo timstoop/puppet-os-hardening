@@ -79,6 +79,10 @@ class os_hardening (
   Boolean           $apparmor_in_use          = false,
   Boolean           $selinux_in_use           = false,
   Array             $privileged_binaries      = [],
+
+  Array             $unwanted_packages        = ['telnet'],
+  Array             $wanted_packages          = ['ntp'],
+  Array             $disabled_services        = ['rsync'],
 ) {
 
   # Prepare
@@ -210,6 +214,12 @@ class os_hardening (
       apparmor_in_use     => $apparmor_in_use,
       privileged_binaries => $privileged_binaries,
     }
+  }
+
+  class { 'os_hardening::services':
+    unwanted_packages => $unwanted_packages,
+    wanted_packages   => $wanted_packages,
+    disabled_services => $disabled_services,
   }
 
 }
