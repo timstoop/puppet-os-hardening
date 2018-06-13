@@ -17,6 +17,7 @@ class os_hardening::sysctl (
   Boolean $enable_ipv4_forwarding  = false,
   Boolean $manage_ipv6             = true,
   Boolean $enable_ipv6             = false,
+  Boolean $fully_disable_ipv6      = false,
   Boolean $enable_ipv6_forwarding  = false,
   Boolean $arp_restricted          = true,
   Boolean $enable_sysrq            = false,
@@ -47,27 +48,29 @@ class os_hardening::sysctl (
       sysctl { 'net.ipv6.conf.all.disable_ipv6': value => '0' }
       sysctl { 'net.ipv6.conf.all.forwarding': value => bool2num($enable_ipv6_forwarding) }
     } else {
-      # IPv6 disabled
-      sysctl { 'net.ipv6.conf.all.disable_ipv6': value => '1' }
-      sysctl { 'net.ipv6.conf.all.forwarding': value => '0' }
-      sysctl { 'net.ipv6.conf.default.router_solicitations': value => '0' }
-      sysctl { 'net.ipv6.conf.default.accept_ra_rtr_pref': value => '0' }
-      sysctl { 'net.ipv6.conf.default.accept_ra_pinfo': value => '0' }
-      sysctl { 'net.ipv6.conf.default.accept_ra_defrtr': value => '0' }
-      sysctl { 'net.ipv6.conf.default.autoconf': value => '0' }
-      sysctl { 'net.ipv6.conf.default.dad_transmits': value => '0' }
-      sysctl { 'net.ipv6.conf.default.max_addresses': value => '1' }
+      if $fully_disable_ipv6 {
+        # Disable it in the kernel as well
+        exec { 'CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled':
+          command => "/bin/sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=\"\\(.*\\)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\\1 ipv6.disable=1\"/g' /etc/default/grub;",
+          unless  => "/bin/grep GRUB_CMDLINE_LINUX /etc/default/grub | /bin/grep -q 'ipv6.disable=1'",
+          notify  => Exec['CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled - update grub'],
+        }
 
-      # Disable it in the kernel as well
-			exec { 'CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled':
-				command => "/bin/sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=\"\\(.*\\)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\\1 ipv6.disable=1\"/g' /etc/default/grub;",
-				unless  => "/bin/grep GRUB_CMDLINE_LINUX /etc/default/grub | /bin/grep -q 'ipv6.disable=1'",
-				notify  => Exec['CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled - update grub'],
-			}
-
-      exec { 'CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled - update grub':
-        command     => '/usr/sbin/update-grub',
-        refreshonly => true,
+        exec { 'CIS DIL Benchmark 3.3.3 - Ensure IPv6 is disabled - update grub':
+          command     => '/usr/sbin/update-grub',
+          refreshonly => true,
+        }
+      } else {
+        # IPv6 disabled
+        sysctl { 'net.ipv6.conf.all.disable_ipv6': value => '1' }
+        sysctl { 'net.ipv6.conf.all.forwarding': value => '0' }
+        sysctl { 'net.ipv6.conf.default.router_solicitations': value => '0' }
+        sysctl { 'net.ipv6.conf.default.accept_ra_rtr_pref': value => '0' }
+        sysctl { 'net.ipv6.conf.default.accept_ra_pinfo': value => '0' }
+        sysctl { 'net.ipv6.conf.default.accept_ra_defrtr': value => '0' }
+        sysctl { 'net.ipv6.conf.default.autoconf': value => '0' }
+        sysctl { 'net.ipv6.conf.default.dad_transmits': value => '0' }
+        sysctl { 'net.ipv6.conf.default.max_addresses': value => '1' }
       }
     }
     #ignore RAs on Ipv6
