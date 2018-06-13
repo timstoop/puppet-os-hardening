@@ -73,9 +73,11 @@ class os_hardening::sysctl (
         sysctl { 'net.ipv6.conf.default.max_addresses': value => '1' }
       }
     }
-    #ignore RAs on Ipv6
-    sysctl { 'net.ipv6.conf.all.accept_ra': value => '0' }
-    sysctl { 'net.ipv6.conf.default.accept_ra': value => '0' }
+    unless $fully_disable_ipv6 {
+      #ignore RAs on Ipv6
+      sysctl { 'net.ipv6.conf.all.accept_ra': value => '0' }
+      sysctl { 'net.ipv6.conf.default.accept_ra': value => '0' }
+    }
   }
   # Enable RFC-recommended source validation feature. It should not be used for routers on complex networks, but is helpful for
   # end hosts and routers serving small networks.
