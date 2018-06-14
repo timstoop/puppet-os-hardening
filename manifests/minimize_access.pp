@@ -100,7 +100,6 @@ class os_hardening::minimize_access (
     password => '*',
   }
 
-<<<<<<< HEAD
   # this removes access from users to run at or cron, only root can do so
   file { ['/etc/cron.allow', '/etc/at.allow']:
     ensure => file,
