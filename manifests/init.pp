@@ -30,6 +30,8 @@ class os_hardening (
   Boolean           $allow_change_user        = false,
   Array             $ignore_users             = [],
   Integer           $recurselimit             = 5,
+  Boolean           $strict_tcp_wrappers      = false,
+  String            $allow_ssh_from           = 'ALL',
 
   Boolean           $passwdqc_enabled         = true,
   Integer           $auth_retries             = 5,
