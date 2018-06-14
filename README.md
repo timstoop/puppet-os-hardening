@@ -74,6 +74,10 @@ This Puppet module provides secure configuration of your base OS with hardening.
   array of system user accounts that should _not be_ hardened (password disabled and shell set to `/usr/sbin/nologin`)
 * `recurselimit = 5`
   directory depth for recursive permission check
+* `strict_tcp_wrappers = false`
+  deny all access that has not been explicitely allowed by tcp wrappers (ie. set `ALL: ALL` in hosts.deny)
+* `allow_ssh_from = 'ALL'`
+  when strict_tcp_wrappers is true, add an additional entry to allow ssh connections from the mentioned address or ALL (which is the default), set to false to not set anything in hosts.allow
 * `chfn_restrict = ""`
   which fields may be changed by regular users using chfn
 * `enable_module_loading = true`

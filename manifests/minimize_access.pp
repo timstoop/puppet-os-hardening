@@ -17,6 +17,8 @@ class os_hardening::minimize_access (
   String  $shadowgroup         = 'root',
   String  $shadowmode          = '0600',
   Integer $recurselimit        = 5,
+  Boolean $strict_tcp_wrappers = false,
+  String  $allow_ssh_from      = 'ALL',
 ) {
 
   case $::operatingsystem {
@@ -95,12 +97,22 @@ class os_hardening::minimize_access (
     password => '*',
   }
 
-  # CIS DIL Benchmark 3.4.2 - 3.4.5
-  file { '/etc/hosts.deny':
-    content => 'ALL: ALL',
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root';
+  if $strict_tcp_wrappers {
+    # CIS DIL Benchmark 3.4.2 - 3.4.5
+    file { '/etc/hosts.deny':
+      content => 'ALL: ALL',
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root';
+    }
+
+    unless $allow_ssh_from {
+      file_line { 'Set allowed hosts for sshd in tcp wrappers config':
+        line  => "sshd: ${allow_ssh_from}",
+        match => '^sshd:\s+.*',
+        file  => '/etc/hosts.allow',
+      }
+    }
   }
 
 }
