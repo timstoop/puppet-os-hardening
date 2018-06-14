@@ -132,11 +132,13 @@ class os_hardening (
     allow_login_without_home => $allow_login_without_home,
   }
   class { 'os_hardening::minimize_access':
-    allow_change_user => $allow_change_user,
-    ignore_users      => $ignore_users,
-    shadowgroup       => $shadowgroup,
-    shadowmode        => $shadowmode,
-    recurselimit      => $recurselimit,
+    allow_change_user   => $allow_change_user,
+    ignore_users        => $ignore_users,
+    shadowgroup         => $shadowgroup,
+    shadowmode          => $shadowmode,
+    recurselimit        => $recurselimit,
+    strict_tcp_wrappers => $strict_tcp_wrappers,
+    allow_ssh_from      => $allow_ssh_from,
   }
   class { 'os_hardening::modules':
     disable_filesystems   => $disable_filesystems,
