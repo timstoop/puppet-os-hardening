@@ -17,7 +17,7 @@ class os_hardening::pam (
   Boolean $manage_pam_unix   = false,
   Boolean $enable_pw_history = false,
   Integer $pw_remember_last  = 5,
-  Boolean $only_root_may_su  = true,
+  Boolean $only_root_may_su  = false,
 ) {
 
   # prepare package names
@@ -137,7 +137,7 @@ class os_hardening::pam (
       if $only_root_may_su {
         file { $su_path:
           ensure  => file,
-          content => template('os_hardening/pam_su.erb'),
+          content => template('os_hardening/pam_su_debian_ubuntu.erb'),
           owner   => 'root',
           group   => 'root',
           mode    => '0640',
