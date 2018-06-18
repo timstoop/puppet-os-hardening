@@ -29,6 +29,8 @@ class os_hardening (
 
   Boolean           $allow_change_user        = false,
   Array             $ignore_users             = [],
+  Array             $folders_to_restrict      =
+    ['/usr/local/games','/usr/local/sbin','/usr/local/bin','/usr/bin','/usr/sbin','/sbin','/bin'],
   Integer           $recurselimit             = 5,
   Boolean           $strict_tcp_wrappers      = false,
   String            $allow_ssh_from           = 'ALL',
@@ -153,6 +155,7 @@ class os_hardening (
   class { 'os_hardening::minimize_access':
     allow_change_user   => $allow_change_user,
     ignore_users        => $ignore_users,
+    folders_to_restrict => $folders_to_restrict,
     shadowgroup         => $shadowgroup,
     shadowmode          => $shadowmode,
     recurselimit        => $recurselimit,
