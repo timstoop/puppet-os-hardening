@@ -15,7 +15,7 @@ class os_hardening::minimize_access (
     ['root','sync','shutdown','halt'],
   Array   $ignore_users        = [],
   Array   $folders_to_restrict =
-    ['/usr/local/games','/usr/local/sbin','/usr/local/bin','/usr/bin','/usr/sbin','/sbin','/bin']
+    ['/usr/local/games','/usr/local/sbin','/usr/local/bin','/usr/bin','/usr/sbin','/sbin','/bin'],
   String  $shadowgroup         = 'root',
   String  $shadowmode          = '0600',
   Integer $recurselimit        = 5,
