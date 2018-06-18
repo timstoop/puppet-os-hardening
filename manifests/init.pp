@@ -87,6 +87,8 @@ class os_hardening (
   Array             $unwanted_packages        = ['telnet'],
   Array             $wanted_packages          = ['ntp'],
   Array             $disabled_services        = ['rsync'],
+  Boolean           $enable_apparmor          = false,
+  Boolean           $apparmor_enforce_all     = false,
 ) {
 
   # Prepare
@@ -228,6 +230,12 @@ class os_hardening (
     unwanted_packages => $unwanted_packages,
     wanted_packages   => $wanted_packages,
     disabled_services => $disabled_services,
+  }
+
+  if $enable_apparmor {
+    class { 'os_hardening::apparmor':
+      enforce_all => $apparmor_enforce_all,
+    }
   }
 
 }

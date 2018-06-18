@@ -122,6 +122,10 @@ This Puppet module provides secure configuration of your base OS with hardening.
   packages that should be added to the system
 * `disabled_services = ['rsync']`
   services that should not be enabled
+* `enable_apparmor = false`
+  for installing and configuring apparmor, set to true (requires a machine restart to fully activate!)
+* `apparmor_enforce_all = false`
+  when apparmor should enforce all profiles it can load, set this to true
 
 ## Usage
 
