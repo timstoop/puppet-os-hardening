@@ -153,7 +153,7 @@ class os_hardening::minimize_access (
       group   => 'root';
     }
 
-    if $allow_ssh_from {
+    if $allow_ssh_from != false {
       file_line { 'Set allowed hosts for sshd in tcp wrappers config':
         line  => "sshd: ${allow_ssh_from}",
         match => '^sshd:\s+.*',
