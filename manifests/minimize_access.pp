@@ -157,7 +157,7 @@ class os_hardening::minimize_access (
       file_line { 'Set allowed hosts for sshd in tcp wrappers config':
         line  => "sshd: ${allow_ssh_from}",
         match => '^sshd:\s+.*',
-        file  => '/etc/hosts.allow',
+        path  => '/etc/hosts.allow',
       }
     }
   }
