@@ -89,6 +89,10 @@ class os_hardening (
   Array             $disabled_services        = ['rsync'],
   Boolean           $enable_apparmor          = false,
   Boolean           $apparmor_enforce_all     = false,
+
+  Boolean           $enable_grub_hardening    = false,
+  String            $grub_user                = 'root',
+  String            $grub_password_hash       = false,
 ) {
 
   # Prepare
@@ -235,6 +239,13 @@ class os_hardening (
   if $enable_apparmor {
     class { 'os_hardening::apparmor':
       enforce_all => $apparmor_enforce_all,
+    }
+  }
+
+  if $enable_grub_hardening {
+    class { 'os_hardening::grub':
+      user          => $grub_user,
+      password_hash => $grub_password_hash,
     }
   }
 
