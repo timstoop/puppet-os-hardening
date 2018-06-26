@@ -134,14 +134,12 @@ class os_hardening::pam (
       }
 
       #only allow root and members of the group wheel to su
-      if $only_root_may_su {
-        file { $su_path:
-          ensure  => file,
-          content => template('os_hardening/pam_su_debian_ubuntu.erb'),
-          owner   => 'root',
-          group   => 'root',
-          mode    => '0640',
-        }
+      file { $su_path:
+        ensure  => file,
+        content => template('os_hardening/pam_su_debian_ubuntu.erb'),
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0640',
       }
 
       exec { 'update-pam':
