@@ -178,10 +178,6 @@ class os_hardening (
     recurselimit        => $recurselimit,
     strict_tcp_wrappers => $strict_tcp_wrappers,
     allow_ssh_from      => $allow_ssh_from,
-    folders_to_restrict => $folders_to_restrict_int,
-    shadowgroup         => $shadowgroup,
-    shadowmode          => $shadowmode,
-    recurselimit        => $recurselimit,
   }
   class { 'os_hardening::modules':
     disable_filesystems   => $disable_filesystems,
