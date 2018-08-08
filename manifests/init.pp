@@ -35,6 +35,7 @@ class os_hardening (
   Integer           $recurselimit             = 5,
   Boolean           $strict_tcp_wrappers      = false,
   String            $allow_ssh_from           = 'ALL',
+  String            $dir_mode                 = '0750',
 
   Boolean           $passwdqc_enabled         = true,
   Integer           $auth_retries             = 5,
@@ -178,6 +179,7 @@ class os_hardening (
     recurselimit        => $recurselimit,
     strict_tcp_wrappers => $strict_tcp_wrappers,
     allow_ssh_from      => $allow_ssh_from,
+    dir_mode            => $dir_mode,
   }
   class { 'os_hardening::modules':
     disable_filesystems   => $disable_filesystems,

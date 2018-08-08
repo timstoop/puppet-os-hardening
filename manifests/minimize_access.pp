@@ -21,6 +21,7 @@ class os_hardening::minimize_access (
   Integer $recurselimit        = 5,
   Boolean $strict_tcp_wrappers = false,
   String  $allow_ssh_from      = 'ALL',
+  String  $dir_mode            = '0750',
 ) {
 
   case $::operatingsystem {
@@ -162,5 +163,13 @@ class os_hardening::minimize_access (
     }
   }
 
+  # i do not know how this works on anything else than debian/ubuntu
+  if ::operatingsystem == 'debian' or ::operatingsystem == 'ubuntu' {
+    file_line { 'CIS DIL Benchmark 6.2.8 - Ensure user home directories permissions are 750 or more restrictive':
+      path  => '/etc/adduser.conf',
+      match => '^DIR_MODE=',
+      line  => "DIR_MODE=${dir_mode}";
+    }
+  }
 }
 

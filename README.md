@@ -92,6 +92,8 @@ Otherwise puppet will drop an error (duplicate resource)!
   deny all access that has not been explicitely allowed by tcp wrappers (ie. set `ALL: ALL` in hosts.deny)
 * `allow_ssh_from = 'ALL'`
   when strict_tcp_wrappers is true, add an additional entry to allow ssh connections from the mentioned address or ALL (which is the default), set to false to not set anything in hosts.allow
+* `dir_mode = '0750'`
+  mode to use for directories created while creating a user (homedirs, basically)
 * `chfn_restrict = ""`
   which fields may be changed by regular users using chfn
 * `enable_module_loading = true`
