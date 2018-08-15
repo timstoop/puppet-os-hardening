@@ -94,7 +94,7 @@ class os_hardening (
 
   Boolean           $enable_grub_hardening    = false,
   String            $grub_user                = 'root',
-  String            $grub_password_hash       = false,
+  String            $grub_password_hash       = '',
   Boolean           $boot_without_password    = true,
 ) {
 
@@ -255,12 +255,11 @@ class os_hardening (
     }
   }
 
-  if $enable_grub_hardening {
-    class { 'os_hardening::grub':
-      user                  => $grub_user,
-      password_hash         => $grub_password_hash,
-      boot_without_password => $boot_without_password,
-    }
+  class { 'os_hardening::grub':
+    enable                => $enable_grub_hardening,
+    user                  => $grub_user,
+    password_hash         => $grub_password_hash,
+    boot_without_password => $boot_without_password,
   }
 
 }

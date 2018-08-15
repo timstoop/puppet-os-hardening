@@ -140,7 +140,7 @@ Otherwise puppet will drop an error (duplicate resource)!
   set to true to enable some grub hardening rules
 * `grub_user = 'root'`
   the grub username that needs to be provided when changing config on the grub prompt
-* `grub_password_hash = false`
+* `grub_password_hash = ''`
   a password hash created with `grub-mkpasswd-pbkdf2` that is associated with the grub\_user
 * `boot_without_password = true`
   setup Grub so it only requires a password when changing an entry, not when booting an existing entry
