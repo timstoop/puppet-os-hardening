@@ -86,11 +86,12 @@ class os_hardening (
   Boolean           $selinux_in_use           = false,
   Array             $privileged_binaries      = [],
 
-  Array             $unwanted_packages        = ['telnet'],
-  Array             $wanted_packages          = ['ntp'],
-  Array             $disabled_services        = ['rsync'],
   Boolean           $enable_apparmor          = false,
   Boolean           $apparmor_enforce_all     = false,
+
+  Array             $unwanted_packages        = [],
+  Array             $wanted_packages          = [],
+  Array             $disabled_services        = [],
 
   Boolean           $enable_grub_hardening    = false,
   String            $grub_user                = 'root',

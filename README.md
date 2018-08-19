@@ -126,16 +126,16 @@ Otherwise puppet will drop an error (duplicate resource)!
   when set to true, this will override the default bashrc to tighten security based on the CIS Benchmark recommendations
 * `default_umask = '027'`
   sets the default umask in the global bashrc, if `manage_global_bashrc` is enabled, should be `027` or less according to CIS Benchmark 5.4.4
-* `unwanted_packages = ['telnet']`
-  packages that should be removed from the system
-* `wanted_packages = ['ntp']`
-  packages that should be added to the system
-* `disabled_services = ['rsync']`
-  services that should not be enabled
 * `enable_apparmor = false`
   for installing and configuring apparmor, set to true (requires a machine restart to fully activate!)
 * `apparmor_enforce_all = false`
   when apparmor should enforce all profiles it can load, set this to true
+* `unwanted_packages = []`
+  packages that should be removed from the system
+* `wanted_packages = []`
+  packages that should be added to the system
+* `disabled_services = []`
+  services that should not be enabled
 * `enable_grub_hardening = false`
   set to true to enable some grub hardening rules
 * `grub_user = 'root'`
@@ -150,6 +150,25 @@ Otherwise puppet will drop an error (duplicate resource)!
 After adding this module, you can use the class:
 
     class { 'os_hardening': }
+
+### Note about wanted/unwanted packages and disabled services
+
+As the CIS Distribution Independent Linux Benchmark is a good starting point
+regarding hardening of systems, it was deemed appropriate to implement an easy
+way to deal with one-offs for which one doesn't want to write an entire module.
+
+For instance, to increase CIS DIL compliance on a Debian system, one should set
+the following:
+
+```
+wanted_packages   => ['ntp'],
+unwanted_packages => ['telnet'],
+disabled_services => ['rsync'],
+```
+
+The default settings of NTP are actually pretty good for most situations, so it
+is not immediately necessary to implement a module. However, if you do use a
+module to control these services, that is of course preferred.
 
 ## Testing
 
